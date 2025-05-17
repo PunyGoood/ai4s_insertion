@@ -1,0 +1,94 @@
+[
+  {
+    "fields": {
+      "一级领域": [
+        "医疗与健康"
+      ],
+      "二级领域": [
+        "生物医药"
+      ],
+      "国家/地区": [
+        "美国"
+      ],
+      "完成输入": true,
+      "提交日期": 1746547200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505003624",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "NIH-NLM-NCBI 蛋白质簇（Protein Clusters）",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "NIH-NLM-NCBI 蛋白质簇（Protein Clusters）是由美国国立卫生研究院（NIH）旗下的美国国立医学图书馆（NLM）下属国家生物技术信息中心（NCBI）提供的关于蛋白质簇的数据集，可用于蛋白质相关的研究分析，帮助科研人员了解蛋白质之间的关系、功能等。 ",
+          "type": "text"
+        }
+      ],
+      "数据类型": [
+        "科研数据（研发创新）"
+      ],
+      "数据链接": {
+        "link": "https://www.ncbi.nlm.nih.gov/proteinclusters",
+        "text": "https://www.ncbi.nlm.nih.gov/proteinclusters"
+      },
+      "来源-（内部）需求团队": [
+        "AI4生命科学团队"
+      ],
+      "线索在数据库情况": [
+        {
+          "text": "线索xsk_202505003624在20250312录入，当前采集状态是：待开始",
+          "type": "text"
+        }
+      ],
+      "线索来源类型": [
+        "内部需求-AI4S"
+      ],
+      "预估大小（GB）": 1
+    },
+    "record_id": "recuJOu8uYZqrk"
+  },
+  {
+    "fields": {
+      "备注": [
+        {
+          "text": "fdfbd",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747324800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004057",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "asd",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://asd",
+        "text": "http://asd"
+      },
+      "线索在数据库情况": [
+        {
+          "text": "线索xsk_202505004057在未知日期录入，当前采集状态是：暂无",
+          "type": "text"
+        }
+      ],
+      "线索来源类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLlYxkUhG4I"
+  }
+]
