@@ -1,16 +1,27 @@
 [
   {
     "fields": {
-      "一级领域": [
-        "医疗与健康"
-      ],
-      "二级领域": [
-        "生物医药"
-      ],
+      "一级领域": "医疗与健康",
+      "二级领域": "生物医药",
       "国家/地区": [
         "美国"
       ],
+      "在线索库的采集状态": [
+        {
+          "text": "待开始",
+          "type": "text"
+        }
+      ],
       "完成输入": true,
+      "接口人": [
+        {
+          "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/v3_00i2_0dd322b1-b57d-47c7-9e5b-df0bb8faac0g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "luobei@pjlab.org.cn",
+          "en_name": "骆蓓",
+          "id": "da714327",
+          "name": "骆蓓"
+        }
+      ],
       "提交日期": 1746547200000,
       "数据ID": [
         {
@@ -30,65 +41,1173 @@
           "type": "text"
         }
       ],
-      "数据类型": [
-        "科研数据（研发创新）"
-      ],
+      "数据类型": "科研数据（研发创新）",
       "数据链接": {
         "link": "https://www.ncbi.nlm.nih.gov/proteinclusters",
         "text": "https://www.ncbi.nlm.nih.gov/proteinclusters"
       },
+      "来源-事件ID": "HHS 250214",
+      "来源-类型": [
+        "内部需求-AI4S"
+      ],
       "来源-（内部）需求团队": [
         "AI4生命科学团队"
       ],
-      "线索在数据库情况": [
+      "进入线索库时间": [
         {
-          "text": "线索xsk_202505003624在20250312录入，当前采集状态是：待开始",
+          "text": "20250312",
           "type": "text"
         }
-      ],
-      "线索来源类型": [
-        "内部需求-AI4S"
-      ],
-      "预估大小（GB）": 1
+      ]
     },
     "record_id": "recuJOu8uYZqrk"
   },
   {
     "fields": {
-      "备注": [
-        {
-          "text": "fdfbd",
-          "type": "text"
-        }
-      ],
       "完成输入": true,
-      "提交日期": 1747324800000,
+      "提交日期": 1746547200000,
       "数据ID": [
         {
-          "text": "xsk_202505004057",
+          "text": "xsk_202505004096",
           "type": "text"
         }
       ],
       "数据名称": [
         {
-          "text": "asd",
+          "text": "1",
           "type": "text"
         }
       ],
       "数据链接": {
-        "link": "http://asd",
-        "text": "http://asd"
+        "link": "http://111223333",
+        "text": "111223333"
       },
-      "线索在数据库情况": [
-        {
-          "text": "线索xsk_202505004057在未知日期录入，当前采集状态是：暂无",
-          "type": "text"
-        }
-      ],
-      "线索来源类型": [
+      "来源-类型": [
         "内部需求-AI4S"
       ]
     },
-    "record_id": "recuLlYxkUhG4I"
+    "record_id": "recuLIEcr9Eqg0"
+  },
+  {
+    "fields": {
+      "提交日期": 1746547200000,
+      "数据链接": {
+        "link": "https://www.ncbi.nlm.nih.gov/proteinclusters",
+        "text": "https://www.ncbi.nlm.nih.gov/proteinclusters"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLIEI8ZSo1O"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1746547200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004097",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "NIH-NLM-NCBI 蛋白质数据库（Protein Database）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.ncbi.nlm.nih.gov/protein/",
+        "text": "https://www.ncbi.nlm.nih.gov/protein/"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLINEbx0GAt"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1746547200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004098",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "NIH-NLM-NCBI 基因数据库（Gene Database）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.ncbi.nlm.nih.gov/gene/",
+        "text": "https://www.ncbi.nlm.nih.gov/gene/"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLINEFCoS0t"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1746547200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004099",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "开放基因组数据集 OpenGenome2",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://huggingface.co/datasets/arcinstitute/opengenome2",
+        "text": "https://huggingface.co/datasets/arcinstitute/opengenome2"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLINFN7yODB"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1746547200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004100",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "KEGG",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.genome.jp/kegg/",
+        "text": "https://www.genome.jp/kegg/"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ],
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLINFN741xE"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004101",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "有机化合物谱数据库 SDBS(Spectral Database for Organic Compounds)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://sdbs.db.aist.go.jp",
+        "text": "https://sdbs.db.aist.go.jp"
+      }
+    },
+    "record_id": "recuLNi9bwE5s1"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004102",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "核磁共振数据库 NMRShiftDB(NMRShift Database)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://nmrshiftdb.nmr.uni-koeln.de",
+        "text": "https://nmrshiftdb.nmr.uni-koeln.de"
+      }
+    },
+    "record_id": "recuLNijSzYALT"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004103",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "NIST化学网络图书馆 NIST Chemistry WebBook",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://webbook.nist.gov/chemistry/",
+        "text": "https://webbook.nist.gov/chemistry/"
+      }
+    },
+    "record_id": "recuLNijSzpz5c"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004104",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "SpectraBase谱库 SpectraBase",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.spectrabase.com/",
+        "text": "https://www.spectrabase.com"
+      }
+    },
+    "record_id": "recuLNijSzOgOd"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004105",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "ChemSpider化学结构数据库 ChemSpider",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.chemspider.com/",
+        "text": "https://www.chemspider.com"
+      }
+    },
+    "record_id": "recuLNijSz5Rk8"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004106",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "物竞数据库 (WuJing Database)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://www.basechem.org",
+        "text": "www.basechem.org"
+      }
+    },
+    "record_id": "recuLNijSz3Ziy"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004107",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "上海有机所红外谱图数据库 (Shanghai Institute of Organic Chemistry Infrared Spectra Database)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.organchem.nsdc.cn/scdb/default.asp",
+        "text": "https://www.organchem.nsdc.cn/scdb/default.asp"
+      }
+    },
+    "record_id": "recuLNijSztuAV"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004108",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "极地测高卫星数据 CryoSat-2",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://earth.esa.int/eogateway/missions/cryosat/data",
+        "text": "https://earth.esa.int/eogateway/missions/cryosat/data"
+      }
+    },
+    "record_id": "recuLNijSzSVfe"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004109",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "冰桥机载地形测绘仪数据 IceBridge ATM（IceBridge Airborne Topographic Mapper Data）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://catalog.data.gov/dataset/icebridge-atm-l2-icessn-elevation-slope-and-roughness-v002",
+        "text": "https://catalog.data.gov/dataset/icebridge-atm-l2-icessn-elevation-slope-and-roughness-v002"
+      }
+    },
+    "record_id": "recuLNijSzYg0k"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004110",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "冰、云和陆地高程卫星-2 ICESat-2（Ice, Cloud, and land Elevation Satellite-2）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://icesat-2.gsfc.nasa.gov/sea-ice-data",
+        "text": "https://icesat-2.gsfc.nasa.gov/sea-ice-data"
+      }
+    },
+    "record_id": "recuLNijSzNxZO"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004111",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "哨兵-1号雷达成像卫星 Sentinel-1 ",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://sentiwiki.copernicus.eu/web/s1-applications#S1Applications-IceMonitoring",
+        "text": "https://sentiwiki.copernicus.eu/web/s1-applications#S1Applications-IceMonitoring"
+      }
+    },
+    "record_id": "recuLNijSzvAAz"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004112",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": " 欧洲中期天气预报中心(ECMWF)高分辨率陆地表面再分析数据集 ERA5-Land (ECMWF ReAnalysis 5-Land)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.ecmwf.int/en/era5-land",
+        "text": "https://www.ecmwf.int/en/era5-land"
+      }
+    },
+    "record_id": "recuLNijSzzRWp"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004113",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "哨兵-2号多光谱光学成像卫星 Sentinel-2",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://sentiwiki.copernicus.eu/web/s2-products#S2Products-CopernicusSentinel-2Collection-1AvailabilityStatusS2-Products-Collection-1-Products-Descriptiontrue",
+        "text": "https://sentiwiki.copernicus.eu/web/s2-products#S2Products-CopernicusSentinel-2Collection-1AvailabilityStatusS2-Products-Collection-1-Products-Descriptiontrue"
+      }
+    },
+    "record_id": "recuLNijSzOD6J"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004114",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "哨兵-3号海洋与陆地综合观测卫星数据 Sentinel-3",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-3",
+        "text": "https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-3"
+      }
+    },
+    "record_id": "recuLNijSzJ3W7"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004115",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "泛北极冰-海洋模拟与同化系统海冰厚度数据 PIOMAS SIT（Pan-Arctic Ice-Ocean Modeling and Assimilation System Sea Ice Thickness）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/",
+        "text": "https://psc.apl.uw.edu/data/global-sea-ice-giomas-data-sets/"
+      }
+    },
+    "record_id": "recuLNijSzT0mK"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004116",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "泛北极冰-海洋模拟与同化系统海冰体积数据 PIOMAS SIV（Pan-Arctic Ice-Ocean Modeling and Assimilation System Sea Ice Volume）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/",
+        "text": "https://psc.apl.uw.edu/research/projects/arctic-sea-ice-volume-anomaly/"
+      }
+    },
+    "record_id": "recuLNijSzx8Fm"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004117",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "美国国家雪冰数据中心（NSIDC）多通道扫描微波辐射计数据\n",
+          "type": "text"
+        },
+        {
+          "text": "SMMR（Scanning Multichannel Microwave Radiometer)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://nsidc.org/data/smmr_ssmi/data",
+        "text": "https://nsidc.org/data/smmr_ssmi/data"
+      },
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLNijSzGgBZ"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004117",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "美国国防气象卫星计划（DMSP） 专用传感器微波成像仪SSM/I (Special Sensor Microwave/Imager)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://nsidc.org/data/smmr_ssmi/data",
+        "text": "https://nsidc.org/data/smmr_ssmi/data"
+      }
+    },
+    "record_id": "recuLNijSzLjbS"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004118",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "美国国防气象卫星计划 DMSP（Defense Meteorological Satellite Program）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.ncei.noaa.gov/products/satellite/defense-meteorological-satellite-program",
+        "text": "https://www.ncei.noaa.gov/products/satellite/defense-meteorological-satellite-program"
+      }
+    },
+    "record_id": "recuLNijSzqyys"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004119",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "NIH-NLM-NCBI 蛋白质数据库（Protein Database）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.ncbi.nlm.nih.gov/protein/",
+        "text": "https://www.ncbi.nlm.nih.gov/protein/"
+      }
+    },
+    "record_id": "recuLNijSzPQmy"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004120",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "NIH-NLM-NCBI 基因数据库（Gene Database）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.ncbi.nlm.nih.gov/gene/",
+        "text": "https://www.ncbi.nlm.nih.gov/gene/"
+      }
+    },
+    "record_id": "recuLNijSzA0a2"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004099",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "开放基因组数据集 OpenGenome2",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://huggingface.co/datasets/arcinstitute/opengenome2",
+        "text": "https://huggingface.co/datasets/arcinstitute/opengenome2"
+      },
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLNijSz6j9G"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004100",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "京都基因与基因组百科全书 KEGG（Kyoto Encyclopedia of Genes and Genomes）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.genome.jp/kegg",
+        "text": "https://www.genome.jp/kegg"
+      },
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLNijSzrDmb"
+  },
+  {
+    "fields": {
+      "内部需求方": [
+        {
+          "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/v3_00i2_0dd322b1-b57d-47c7-9e5b-df0bb8faac0g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "luobei@pjlab.org.cn",
+          "en_name": "骆蓓",
+          "id": "da714327",
+          "name": "骆蓓"
+        }
+      ],
+      "完成输入": true,
+      "接口人": [
+        {
+          "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/v3_00i2_0dd322b1-b57d-47c7-9e5b-df0bb8faac0g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "luobei@pjlab.org.cn",
+          "en_name": "骆蓓",
+          "id": "da714327",
+          "name": "骆蓓"
+        }
+      ],
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004100",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "京都基因与基因组百科全书 KEGG（Kyoto Encyclopedia of Genes and Genomes）",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://www.genome.jp/kegg",
+        "text": "https://www.genome.jp/kegg"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLNijSzjEPk"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "接口人": [
+        {
+          "avatar_url": "https://s3-imfile.feishucdn.com/static-resource/v1/v3_00b2_15ad9e18-dd01-476f-851e-5f4ff0847c2g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "donganjie@pjlab.org.cn",
+          "en_name": "董安洁",
+          "id": "54g249c6",
+          "name": "董安洁"
+        }
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "Bing COVID-19",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "必应新冠肺炎数据包含来自各地区的已确诊病例、死亡病例和治愈病例，该数据每日更新，数据来源包括（BNO 新闻、疾病控制和预防中心 (CDC)、国家/地区和州公共卫生部门、维基百科、世界卫生组织 (WHO)、华尔街 24/7）。该数据集更新至2023年5月6日。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "科研数据（研发创新）",
+      "数据链接": {
+        "link": "https://learn.microsoft.com/azure/open-datasets/dataset-bing-covid-19?tabs=azure-storage",
+        "text": "https://learn.microsoft.com/azure/open-datasets/dataset-bing-covid-19"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwweHme1E"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "The COVID-19 Open Research Dataset",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "为应对 COVID-19 疫情，白宫与多个顶尖研究机构联合筹备了COVID-19开放研究数据集(CORD-19)。CORD-19是一个涵盖超过100万篇学术论文的资源库，其中超过40万篇包含 COVID-19、SARS-CoV-2 及相关冠状病毒的全文。该免费数据集面向全球科研界开放，旨在应用自然语言处理和其他人工智能技术的最新进展，为持续抗击这一传染病提供新的见解。CORD-19整合了来自多个来源的论文和预印本。论文来源于 PubMed Central (PMC)、PubMed、世界卫生组织 Covid-19 数据库以及预印本服务器 bioRxiv、medRxiv 和 arXiv。CORD-19的最终版本于2022年6月2日发布。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "期刊论文",
+      "数据链接": {
+        "link": "https://ai2-semanticscholar-cord-19.s3-us-west-2.amazonaws.com/historical_releases.html",
+        "text": "https://ai2-semanticscholar-cord-19.s3-us-west-2.amazonaws.com/historical_releases.html"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0oKmG"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "DASH Repository (Harvard University)",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "哈佛大学的开放获取数字研究资料库",
+          "type": "text"
+        }
+      ],
+      "数据类型": "期刊论文",
+      "数据链接": {
+        "link": "https://dash.harvard.edu/home",
+        "text": "https://dash.harvard.edu/home"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh03Nis"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "Apollo - University of Cambridge Repository",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "Apollo 是剑桥大学的机构知识库，成立于 2003 年，旨在分享大学的研究成果。该知识库致力于存储和保存大学的研究成果。研究成果包括但不限于出版物、会议论文集、书籍章节、专著、论文、各种形式的研究数据（视频录像、电子表格、计算脚本、代码、图像等）、演示文稿等。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "期刊论文",
+      "数据链接": {
+        "link": "https://www.repository.cam.ac.uk/",
+        "text": "https://www.repository.cam.ac.uk/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0QMA3"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "PubMed central",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "PubMed Central ( PMC ) 是一个免费的数字资源库，用于存档发表在生物医学和生命科学期刊上的开放获取全文学术文章。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "期刊论文",
+      "数据链接": {
+        "link": "https://pmc.ncbi.nlm.nih.gov/",
+        "text": "https://pmc.ncbi.nlm.nih.gov/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh03ZVW"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "National Institutes of Health (NIH) (美国国立卫生研究院)",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "美国生物医学和公共卫生研究最高机构，推动科研和治疗创新。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://www.nih.gov/",
+        "text": "https://www.nih.gov/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0XR1v"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "U.S.Centers for Disease Control and Prevention (CDC)（美国疾病控制与预防中心）",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "CDC是美国卫生与公众服务部（HHS）下属的一个联邦机构，CDC 在全国范围内致力于开发和应用疾病控制和预防技术。它尤其关注传染病、食源性病原体、环境卫生、职业安全与健康、健康促进、伤害预防以及旨在改善美国公民健康的教育活动。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://archive.cdc.gov/",
+        "text": "https://archive.cdc.gov/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0JlFN"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "United States House Committee on Oversight and Government Reform（美国众议院监督和政府改革委员会）",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "监督与政府改革委员会是美国众议院的主要调查委员会。该委员会拥有广泛的管辖权和立法权，是众议院最具影响力和权力的委员会之一。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://oversight.house.gov/",
+        "text": "https://oversight.house.gov/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0F3GX"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "WHO Coronavirus disease (COVID-19) pandemic",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "WHO(世界卫生组织）是联合国下属的一个专门机构,成立于1948年，总部设置在瑞士日内瓦。组织由6个区域共194个会员国负责管理，是国际上最大的政府间卫生组织。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019",
+        "text": "https://www.who.int/emergencies/diseases/novel-coronavirus-2019"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0ZRST"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "Brookings Institution（布鲁金斯学会）",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "美国著名智库之一，与中国关系密切，主要研究社会科学尤其是经济与发展、都市政策、政府、外交政策以及全球经济发展等议题。",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://www.brookings.edu/",
+        "text": "https://www.brookings.edu/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0YSKs"
+  },
+  {
+    "fields": {
+      "一级领域": "人文与社会",
+      "二级领域": "政府决策",
+      "国家/地区": [
+        "美国"
+      ],
+      "外部需求方": [
+        "华东师范大学"
+      ],
+      "提交日期": 1747756800000,
+      "数据名称": [
+        {
+          "text": "Rand Corporation （兰德公司）",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "兰德公司是美国最重要的以军事为主的综合性战略研究机构。它先以研究军事尖端科学技术和重大军事战略而著称于世，继而又扩展到内外政策各方面，逐渐发展成为一个研究政治、军事、经济科技、社会等各方面的综合性思想库，被誉为现代智囊的“大脑集中营”、“超级军事学院”，以及世界智囊团的开创者和代言人。它可以说是当今美国乃至世界最负盛名的决策咨询机构",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://www.rand.org/",
+        "text": "https://www.rand.org/"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLNwxh0uYO8"
   }
 ]

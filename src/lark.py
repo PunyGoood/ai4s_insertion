@@ -18,6 +18,8 @@ import json
 import math
 import logging
 from typing import List, Dict, Any
+import asyncio
+import aiohttp
 logging.basicConfig(level=logging.DEBUG)
 
 APP_ID="cli_a880af1659b0d013"
@@ -31,7 +33,10 @@ LARK_VIEW_ID_ais="vewOC2wJP2"
 LARK_TAB_ID_xsk="tbllob6N3JsFsPw9"
 LARK_VIEW_ID_xsk="vewnVm2Nmj"
 
+#测试
 app_token="I2vVbMSTbavpxksuqnacSKdCnqg"
+
+#总表
 #app_token="Z9ErbJHAhajGrbsstwScuytonQg"
 
 _token_cache = {
@@ -132,7 +137,7 @@ def get_valid_tenant_access_token():
     """
     now = time.time()
 
-    if _token_cache["token"] is None or now > _token_cache["expire_at"] - 60:
+    if _token_cache["token"] is None or now > _token_cache["expire_at"] - 1000:
         _token_cache["token"] = get_tenant_access_token()
         _token_cache["expire_at"] = now + 6000
     return _token_cache["token"]
@@ -286,3 +291,196 @@ def load_records_from_json(filename: str) -> List[Dict[str, Any]]:
     except Exception as e:
         logging.error(f"加载 JSON 文件失败: {str(e)}")
         return []
+    
+
+def normalize_url(raw_link):
+    # 1. 移除可能存在的协议头（http://, https://, //）
+    if raw_link.startswith(("http://", "https://", "//")):
+        # 找到 "://" 或 "//" 之后的部分
+        raw_link = raw_link.split("://")[-1] if "://" in raw_link else raw_link[2:]
+    
+    # 2. 移除开头的 "www."（如果有的话，避免重复）
+    if raw_link.startswith("www."):
+        raw_link = raw_link[4:]
+    
+    # 3. 移除末尾的斜杠 "/"
+    raw_link = raw_link.rstrip("/")
+    
+    # 4. 拼接成最终的 "https://www." 格式
+    normalized_url = f"https://www.{raw_link}"
+    
+    return normalized_url
+
+
+async def get_valid_tenant_access_token_async():
+    """
+    获取有效的 tenant_access_token，自动处理过期（异步版本）
+    """
+    now = time.time()
+
+    if _token_cache["token"] is None or now > _token_cache["expire_at"] - 60:
+        _token_cache["token"] = await get_tenant_access_token_async()
+        _token_cache["expire_at"] = now + 6000
+    return _token_cache["token"]
+
+
+async def get_tenant_access_token_async():
+    """获取飞书访问令牌（异步版本）"""
+    token_url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
+    token_payload = {
+        "app_id": APP_ID,
+        "app_secret": APP_SECRET
+    }
+    
+    headers = {
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(token_url, headers=headers, json=token_payload) as response:
+                token_data = await response.json()
+                tenant_access_token = token_data.get("tenant_access_token")
+                logging.info(f"成功获取访问令牌{tenant_access_token}")
+                return tenant_access_token
+    except Exception as e:
+        logging.error(f"获取令牌时发生异常: {str(e)}")
+        return None
+
+
+async def get_bitable_datas_async(tenant_access_token, app_token, table_id, view_id, page_token='', page_size=20):
+    """获取飞书多维表格数据（异步版本）"""
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/search?page_size={page_size}&page_token={page_token}&user_id_type=user_id"
+    payload_dict = {}
+    if view_id:
+        payload_dict["view_id"] = view_id
+    payload = json.dumps(payload_dict)
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {tenant_access_token}'
+    }
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, data=payload) as response:
+            return await response.json()
+
+
+async def get_records_from_table_async(table_id, view_id, page_size=100):
+    """获取表格记录（异步版本）"""
+    tenant_access_token = await get_valid_tenant_access_token_async()
+    
+    page_token = ''
+    page_size = 500
+    has_more = True
+    feishu_datas = []
+    
+    while has_more:
+        response = await get_bitable_datas_async(tenant_access_token, app_token, table_id, view_id, page_token, page_size)
+        if response['code'] == 0:
+            page_token = response['data'].get('page_token')
+            has_more = response['data'].get('has_more')
+
+            feishu_datas.extend(response['data'].get('items'))
+        else:
+            print(response)
+            raise Exception(response['msg'])
+            
+    return feishu_datas
+
+
+async def update_bitable_record_async(table_id, record_id, fields):
+    """
+    更新飞书多维表格中的记录（异步版本）
+    
+    Args:
+        table_id (str): 表格ID
+        record_id (str): 记录ID
+        fields (dict): 要更新的字段和值
+    
+    Returns:
+        bool: 更新是否成功
+    """
+    tenant_access_token = await get_valid_tenant_access_token_async()
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/{record_id}"
+    headers = {
+        "Authorization": f"Bearer {tenant_access_token}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {"fields": fields}
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.put(url, headers=headers, json=payload) as response:
+            response_json = await response.json()
+            
+            if response.status == 200 and response_json.get("code") == 0:
+                logging.info(f"成功更新记录 {record_id}")
+                return True
+            else:
+                response_text = await response.text()
+                logging.error(f"更新记录失败：{response_text}")
+                return False
+
+
+async def create_bitable_record_async(table_id, fields):
+    """
+    在飞书多维表格中创建新记录（异步版本）
+    
+    Args:
+        table_id (str): 表格ID
+        fields (dict): 要创建的字段和值
+    
+    Returns:
+        bool: 创建是否成功
+    """
+    tenant_access_token = await get_valid_tenant_access_token_async()
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records"
+    headers = {
+        "Authorization": f"Bearer {tenant_access_token}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {"fields": fields}
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, json=payload) as response:
+            response_json = await response.json()
+            
+            if response.status == 200 and response_json.get("code") == 0:
+                logging.info(f"成功创建记录")
+                return True
+            else:
+                response_text = await response.text()
+                logging.error(f"创建记录失败：{response_text}")
+                return False
+
+
+async def batch_update_records_async(table_id, update_records, batch_size=1000):
+    """批量更新记录（异步版本）"""
+    tenant_access_token = await get_valid_tenant_access_token_async()
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/batch_update"
+    headers = {
+        "Authorization": f"Bearer {tenant_access_token}",
+        "Content-Type": "application/json"
+    }
+    
+    success, fail = 0, 0
+    
+    for i in range(0, len(update_records), batch_size):
+        batch = update_records[i : i + batch_size]
+        payload = {"records": batch}
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=payload) as response:
+                response_json = await response.json()
+                
+                if response.status == 200 and response_json.get("code") == 0:
+                    success += len(batch)
+                    logging.info(f"第 {i//batch_size+1} 批更新成功 {len(batch)} 条")
+                else:
+                    fail += len(batch)
+                    response_text = await response.text()
+                    logging.error(f"第 {i//batch_size+1} 批更新失败：HTTP {response.status}，响应：{response_text}")
+    
+    logging.info(f"批量更新完成：成功 {success} 条，失败 {fail} 条")
+    return success, fail
