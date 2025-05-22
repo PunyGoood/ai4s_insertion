@@ -44,6 +44,9 @@ _token_cache = {
     "expire_at": 0
 }
 
+# 存储过期时间
+_token_expire = 7200
+
 def ipupdate(source_df,field_types):
 
     update_records=[]
@@ -137,13 +140,17 @@ def get_valid_tenant_access_token():
     """
     now = time.time()
 
-    if _token_cache["token"] is None or now > _token_cache["expire_at"] - 1000:
-        _token_cache["token"] = get_tenant_access_token()
-        _token_cache["expire_at"] = now + 6000
+    if _token_cache["token"] is None or now > _token_cache["expire_at"] - 60:
+        response_token = get_tenant_access_token()
+        if response_token:
+            _token_cache["token"] = response_token
+            # 从全局变量获取最新的过期时间
+            _token_cache["expire_at"] = now + _token_expire
     return _token_cache["token"]
 
 
 def get_tenant_access_token():
+    global _token_expire
     token_url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
     token_payload = {
         "app_id": APP_ID,
@@ -157,8 +164,11 @@ def get_tenant_access_token():
     try:
         response = requests.post(token_url, headers=headers, json=token_payload)
         token_data = response.json()
+        print(token_data)
         tenant_access_token = token_data.get("tenant_access_token")
-        logging.info(f"成功获取访问令牌{tenant_access_token}")
+        # 更新全局过期时间变量
+        _token_expire = token_data.get("expire", 7200)  # 默认7200秒
+        logging.info(f"成功获取访问令牌{tenant_access_token}，有效期{_token_expire}秒")
         return tenant_access_token
     except Exception as e:
         logging.error(f"获取令牌时发生异常: {str(e)}")
@@ -267,7 +277,7 @@ def sanitize_for_json(obj: Any) -> Any:
         return [sanitize_for_json(item) for item in obj]
     elif isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
         logging.warning(f"发现 JSON 不合规的浮点值: {obj}，替换为 None")
-        return None  # 或 ""，根据飞书 API 字段要求
+        return None 
     return obj
 
 def save_records_to_json(records: List[Dict[str, Any]], filename: str) -> None:

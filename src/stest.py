@@ -28,7 +28,8 @@ from .lark import (
     create_bitable_record,
     sanitize_for_json,
     save_records_to_json,
-    load_records_from_json
+    load_records_from_json,
+    normalize_url
 )
 
 # 设置日志级别
@@ -78,7 +79,7 @@ if __name__ == "__main__":
             fields = ais_record.get('fields', {})  
             if (fields.get('数据链接') and ais_record.get('fields', {}).get('完成输入')):
                 link = fields.get('数据链接')['link']
-                link = link.strip().rstrip('/')
+                link = normalize_url(link)
                 
                 try:
                     ais_id = ais_record.get('fields', {}).get('数据ID', [])[0]['text']
@@ -113,7 +114,7 @@ if __name__ == "__main__":
                 xsk_link = ''
     
             # 确保xsk_link是字符串且不为空
-            xsk_link = str(xsk_link).strip() if xsk_link else ''
+            xsk_link = normalize_url(xsk_link) if xsk_link else ''
         
             if xsk_link and xsk_link in links:
                 print(xsk_link)
@@ -140,7 +141,7 @@ if __name__ == "__main__":
                 xsk_link = ''
     
             # 确保xsk_link是字符串且不为空
-            xsk_link = str(xsk_link).strip() if xsk_link else ''
+            xsk_link = normalize_url(xsk_link) if xsk_link else ''
             xsk_id = xsk_record.get('fields', {}).get('数据ID', [])[0]['text']
 
             if xsk_link and xsk_link in links:
@@ -166,14 +167,26 @@ if __name__ == "__main__":
                 else:
                     new_type = existing_type
                 
-                print("new_type")
-                print(new_type)
+                # 处理外部需求方
+                ais_record = links[xsk_link]
+                existing_external_demanders = xsk_record.get('fields', {}).get('外部需求方', [])
+                if not isinstance(existing_external_demanders, list):
+                    existing_external_demanders = []
+
+                ais_external_demanders = ais_record.get('fields', {}).get('外部需求方', [])
+                if not isinstance(ais_external_demanders, list):
+                    ais_external_demanders = []
+                
+                if existing_external_demanders is not []:
+                    new_external_demanders = existing_external_demanders + ais_external_demanders
+                
 
                 # 更新XSK记录
                 fields_xsk = {
                     '来源-线索次数': current_count + 1,
                     '来源-类型': new_type,
-                    '来源-（内部）需求团队': ['AI4生命科学团队']
+                    '来源-（内部）需求团队': ['AI4生命科学团队'],
+                    '外部需求方': new_external_demanders
                 }
                 update_bitable_record(LARK_TAB_ID_xsk, rid, fields_xsk)
 
@@ -215,13 +228,15 @@ if __name__ == "__main__":
         #########################################################################################
 
         for ais_link, ais_record in links.items():
-            print(ais_link, ais_record)
+
+            ais_link = normalize_url(ais_link) if ais_link else ''
             found = False
             
             # 检查是否已存在匹配记录
             for xsk_record in xsk_records:
                 try:
                     xsk_link = xsk_record.get('fields', {}).get('数据链接', {})['link']
+                    xsk_link = normalize_url(xsk_link) if xsk_link else ''
                     if ais_link == xsk_link:
                         found = True
                         break
@@ -231,7 +246,7 @@ if __name__ == "__main__":
             if not found:
                 print(f"未找到的链接: {ais_link}")
                 rid = ais_record.get('record_id')
-                print(rid)
+
                 
                 fields = ais_record.get('fields', {})
 
@@ -291,7 +306,8 @@ if __name__ == "__main__":
                     '来源-事件ID': issue_id,
                     '来源-（外部）提供单位': fields.get('来源-（外部）提供单位', []),
                     '来源-存储方': fields.get('来源-存储方', []),
-                    '来源-线索次数': 1
+                    '来源-线索次数': 1,
+                    '外部需求方': fields.get('外部需求方', [])
                 }
                 
                 print(new_record)

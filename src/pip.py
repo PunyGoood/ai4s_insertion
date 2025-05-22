@@ -128,7 +128,6 @@ if __name__ == "__main__":
     # 运行异步主函数
     asyncio.run(main())
 
-    # test_urls 部分保持不变，但已注释掉
     # test_urls = [
     #     "example.com",           # -> https://www.example.com
     #     "http://example.com",    # -> https://www.example.com
