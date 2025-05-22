@@ -23,7 +23,7 @@ from .lark import (
     normalize_url
 )
 
-# 设置日志级别
+
 logging.basicConfig(level=logging.DEBUG)
 
 # 飞书表格常量
@@ -32,7 +32,7 @@ LARK_VIEW_ID_ais = "vewOC2wJP2"
 LARK_TAB_ID_xsk = "tbllob6N3JsFsPw9"
 LARK_VIEW_ID_xsk = "vewnVm2Nmj"
 
-# 常量
+
 PROCESSED_IDS_FILE = "processed_ids.json"
 
 
