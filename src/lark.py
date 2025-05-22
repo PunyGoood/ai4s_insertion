@@ -1,231 +1,258 @@
 import os
 import time
-from datetime import datetime
-from pytz import timezone
-import requests
-import dotenv
-from pymongo import errors
-import json
-from .feishu_sync import FeishuBiTableSync
-from .feishu_table import FeishuBiTable
-from .mongodb import get_collection
-from .record_db import RecordDatabase
-import logging
-import pandas as pd
-import numpy as np
-import ast
 import json
 import math
 import logging
-from typing import List, Dict, Any
 import asyncio
 import aiohttp
-logging.basicConfig(level=logging.DEBUG)
+import requests
+import pandas as pd
+import numpy as np
+from typing import List, Dict, Any
+from datetime import datetime
+from pytz import timezone
+from pymongo import errors
+import dotenv
 
-APP_ID="cli_a880af1659b0d013"
-APP_SECRET="6LRmHThxkRlfIE2HEvNvpcI7SfkdPMZ3"
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-#https://aicarrier.feishu.cn/wiki/RV7JwNDPLiwUXrk5rfLc7gNwn9a?table=tbllob6N3JsFsPw9&view=vewnVm2Nmj
-#https://aicarrier.feishu.cn/wiki/RV7JwNDPLiwUXrk5rfLc7gNwn9a?table=tblQV9fpL1IDwu5K&view=vewOC2wJP2
+# Feishu API Credentials
+APP_ID = "cli_a880af1659b0d013"
+APP_SECRET = "6LRmHThxkRlfIE2HEvNvpcI7SfkdPMZ3"
 
-LARK_TAB_ID_ais="tblQV9fpL1IDwu5K"
-LARK_VIEW_ID_ais="vewOC2wJP2"
-LARK_TAB_ID_xsk="tbllob6N3JsFsPw9"
-LARK_VIEW_ID_xsk="vewnVm2Nmj"
+# Feishu Table Configuration
+LARK_TAB_ID_AIS = "tblQV9fpL1IDwu5K"
+LARK_VIEW_ID_AIS = "vewOC2wJP2"
+LARK_TAB_ID_XSK = "tbllob6N3JsFsPw9"
+LARK_VIEW_ID_XSK = "vewnVm2Nmj"
 
-#测试
-app_token="I2vVbMSTbavpxksuqnacSKdCnqg"
+# App Token (Testing)
+APP_TOKEN = "I2vVbMSTbavpxksuqnacSKdCnqg"
+# APP_TOKEN = "Z9ErbJHAhajGrbsstwScuytonQg"  # Production Table
 
-#总表
-#app_token="Z9ErbJHAhajGrbsstwScuytonQg"
-
+# Token Cache
 _token_cache = {
     "token": None,
     "expire_at": 0
 }
+_token_expire = 7200  # Default token expiration time (seconds)
 
-# 存储过期时间
-_token_expire = 7200
+# --- Data Processing Functions ---
 
-def ipupdate(source_df,field_types):
-
-    update_records=[]
-
-    for _,row in source_df.iterrows():
-        fields={}
-        for col,val in row.items():
+def ipupdate(source_df: pd.DataFrame, field_types: Dict[str, str]) -> None:
+    """
+    Update records in Feishu table based on DataFrame input.
+    
+    Args:
+        source_df: DataFrame containing records to update
+        field_types: Dictionary mapping column names to field types
+    """
+    update_records = []
+    
+    for _, row in source_df.iterrows():
+        fields = {}
+        for col, val in row.items():
             ftype = field_types.get(col)
-            if pd.isna(val) or (isinstance(val, (list, np.ndarray)) and len(val)==0):
+            if pd.isna(val) or (isinstance(val, (list, np.ndarray)) and len(val) == 0):
                 continue
-            
+                
             if ftype == "text":
                 fields[col] = str(val).strip()
             elif ftype == "url":
-                if isinstance(val, dict):
-                    fields[col] = {
-                        "text": val.get("text","").strip(),
-                        "link": val.get("link","").strip()
-                    }
-                else:
-                    fields[col] = {"text": "", "link": str(val).strip()}
+                fields[col] = (
+                    {"text": val.get("text", "").strip(), "link": val.get("link", "").strip()}
+                    if isinstance(val, dict)
+                    else {"text": "", "link": str(val).strip()}
+                )
             elif ftype == "multi_select":
-                if isinstance(val, list):
-                    fields[col] = [str(x).strip() for x in val]
-                else:
-                    fields[col] = [x.strip() for x in str(val).split(",") if x.strip()]
+                fields[col] = (
+                    [str(x).strip() for x in val]
+                    if isinstance(val, list)
+                    else [x.strip() for x in str(val).split(",") if x.strip()]
+                )
             elif ftype == "datetime":
-                fields[col] = int(float(val) * 1000)        
-        update_records.append({
-            "record_id":row.get("record_id"),
-            "fields":fields
-        })
-
+                fields[col] = int(float(val) * 1000)
+                
+        update_records.append({"record_id": row.get("record_id"), "fields": fields})
+    
+    # Save records to file
     with open('update_records_output.txt', 'w', encoding='utf-8') as file:
         for record in update_records:
             file.write(f"{record}\n")
-
-
+    
+    # Batch update records
     tenant_access_token = get_valid_tenant_access_token()
-    # 3. 分批调用 batch_update 接口
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{LARK_TAB_ID_xsk}/records/batch_update"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{LARK_TAB_ID_XSK}/records/batch_update"
     headers = {
         "Authorization": f"Bearer {tenant_access_token}",
         "Content-Type": "application/json"
     }
+    
     batch_size = 1000
     success, fail = 0, 0
+    
     for i in range(0, len(update_records), batch_size):
-        batch = update_records[i : i + batch_size]
+        batch = update_records[i:i + batch_size]
         payload = {"records": batch}
         resp = requests.post(url, headers=headers, json=payload)
+        
         if resp.status_code == 200 and resp.json().get("code") == 0:
             success += len(batch)
-            logging.info(f"第 {i//batch_size+1} 批更新成功 {len(batch)} 条")
+            logging.info(f"Batch {i // batch_size + 1} updated successfully: {len(batch)} records")
         else:
             fail += len(batch)
-            logging.error(f"第 {i//batch_size+1} 批更新失败：HTTP {resp.status_code}，响应：{resp.text}")
+            logging.error(f"Batch {i // batch_size + 1} update failed: HTTP {resp.status_code}, Response: {resp.text}")
+    
+    logging.info(f"Batch update completed: {success} successful, {fail} failed")
 
-    logging.info(f"批量更新完成：成功 {success} 条，失败 {fail} 条")
-
-def convert_to_dataframe(records):
-
+def convert_to_dataframe(records: List[Dict[str, Any]]) -> pd.DataFrame:
+    """
+    Convert Feishu records to a pandas DataFrame.
+    
+    Args:
+        records: List of record dictionaries
+    
+    Returns:
+        DataFrame containing the records
+    """
     try:
-        logging.info("开始将记录转换为DataFrame...")
-
-        # 准备数据
+        logging.info("Converting records to DataFrame...")
         data = []
         
         for record in records:
-            
-
-            row = {}
-            row['record_id'] = record.get('record_id')
+            row = {"record_id": record.get('record_id')}
             fields = record.get('fields', {})
-
+            
             for key, value in fields.items():
-                if key != 'record_id':  
+                if key != 'record_id':
                     row[key] = value
             data.append(row)
-                
-        df = pd.DataFrame(data)
-        return df
+            
+        return pd.DataFrame(data)
     except Exception as e:
-        logging.error(f"转换为DataFrame时发生异常: {str(e)}")
+        logging.error(f"Error converting to DataFrame: {str(e)}")
         return pd.DataFrame()
 
+# --- Token Management Functions ---
 
-def get_valid_tenant_access_token():
+def get_valid_tenant_access_token() -> str:
     """
-    获取有效的 tenant_access_token，自动处理过期
+    Get a valid tenant access token, refreshing if expired.
+    
+    Returns:
+        Valid tenant access token
     """
     now = time.time()
-
     if _token_cache["token"] is None or now > _token_cache["expire_at"] - 60:
         response_token = get_tenant_access_token()
         if response_token:
             _token_cache["token"] = response_token
-            # 从全局变量获取最新的过期时间
             _token_cache["expire_at"] = now + _token_expire
     return _token_cache["token"]
 
-
-def get_tenant_access_token():
+def get_tenant_access_token() -> str:
+    """
+    Fetch a new tenant access token from Feishu API.
+    
+    Returns:
+        Tenant access token or None if failed
+    """
     global _token_expire
     token_url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
-    token_payload = {
-        "app_id": APP_ID,
-        "app_secret": APP_SECRET
-    }
-    
-    headers = {
-        "Content-Type": "application/json"
-    }
+    token_payload = {"app_id": APP_ID, "app_secret": APP_SECRET}
+    headers = {"Content-Type": "application/json"}
     
     try:
         response = requests.post(token_url, headers=headers, json=token_payload)
         token_data = response.json()
-        print(token_data)
         tenant_access_token = token_data.get("tenant_access_token")
-        # 更新全局过期时间变量
-        _token_expire = token_data.get("expire", 7200)  # 默认7200秒
-        logging.info(f"成功获取访问令牌{tenant_access_token}，有效期{_token_expire}秒")
+        _token_expire = token_data.get("expire", 7200)
+        logging.info(f"Successfully obtained access token {tenant_access_token}, expires in {_token_expire} seconds")
         return tenant_access_token
     except Exception as e:
-        logging.error(f"获取令牌时发生异常: {str(e)}")
+        logging.error(f"Error obtaining token: {str(e)}")
         return None
 
-def get_bitable_datas(tenant_access_token, app_token, table_id, view_id, page_token='', page_size=20):
+# --- Feishu API Interaction Functions ---
 
+def get_bitable_datas(
+    tenant_access_token: str,
+    app_token: str,
+    table_id: str,
+    view_id: str,
+    page_token: str = '',
+    page_size: int = 20
+) -> Dict[str, Any]:
+    """
+    Fetch data from Feishu bitable.
+    
+    Args:
+        tenant_access_token: Valid access token
+        app_token: Application token
+        table_id: Table ID
+        view_id: View ID
+        page_token: Pagination token
+        page_size: Number of records per page
+    
+    Returns:
+        JSON response from Feishu API
+    """
     url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/search?page_size={page_size}&page_token={page_token}&user_id_type=user_id"
-    payload_dict = {}
-    if view_id:
-        payload_dict["view_id"] = view_id
+    payload_dict = {"view_id": view_id} if view_id else {}
     payload = json.dumps(payload_dict)
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {tenant_access_token}'
     }
-    response = requests.request("POST", url, headers=headers, data=payload)
     
+    response = requests.post(url, headers=headers, data=payload)
     return response.json()
 
-def get_records_from_table(table_id, view_id, page_size=100):
-    tenant_access_token = get_valid_tenant_access_token()
+def get_records_from_table(table_id: str, view_id: str, page_size: int = 100) -> List[Dict[str, Any]]:
+    """
+    Fetch all records from a Feishu table.
     
-
+    Args:
+        table_id: Table ID
+        view_id: View ID
+        page_size: Number of records per page
+    
+    Returns:
+        List of records
+    """
+    tenant_access_token = get_valid_tenant_access_token()
     page_token = ''
     page_size = 500
     has_more = True
     feishu_datas = []
+    
     while has_more:
-        response = get_bitable_datas(tenant_access_token, app_token, table_id, view_id, page_token, page_size)
+        response = get_bitable_datas(tenant_access_token, APP_TOKEN, table_id, view_id, page_token, page_size)
         if response['code'] == 0:
             page_token = response['data'].get('page_token')
             has_more = response['data'].get('has_more')
-
             feishu_datas.extend(response['data'].get('items'))
         else:
-            print(response)
+            logging.error(f"Error fetching records: {response['msg']}")
             raise Exception(response['msg'])
             
-        
     return feishu_datas
 
-
-def update_bitable_record(table_id, record_id, fields):
+def update_bitable_record(table_id: str, record_id: str, fields: Dict[str, Any]) -> bool:
     """
-    更新飞书多维表格中的记录
+    Update a single record in Feishu bitable.
     
     Args:
-        table_id (str): 表格ID
-        record_id (str): 记录ID
-        fields (dict): 要更新的字段和值
+        table_id: Table ID
+        record_id: Record ID
+        fields: Fields to update
     
     Returns:
-        bool: 更新是否成功
+        True if update successful, False otherwise
     """
     tenant_access_token = get_valid_tenant_access_token()
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/{record_id}"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{table_id}/records/{record_id}"
     headers = {
         "Authorization": f"Bearer {tenant_access_token}",
         "Content-Type": "application/json"
@@ -235,25 +262,25 @@ def update_bitable_record(table_id, record_id, fields):
     response = requests.put(url, headers=headers, json=payload)
     
     if response.status_code == 200 and response.json().get("code") == 0:
-        logging.info(f"成功更新记录 {record_id}")
+        logging.info(f"Successfully updated record {record_id}")
         return True
     else:
-        logging.error(f"更新记录失败：{response.text}")
+        logging.error(f"Failed to update record: {response.text}")
         return False
 
-def create_bitable_record(table_id, fields):
+def create_bitable_record(table_id: str, fields: Dict[str, Any]) -> bool:
     """
-    在飞书多维表格中创建新记录
+    Create a new record in Feishu bitable.
     
     Args:
-        table_id (str): 表格ID
-        fields (dict): 要创建的字段和值
+        table_id: Table ID
+        fields: Fields for the new record
     
     Returns:
-        bool: 创建是否成功
+        True if creation successful, False otherwise
     """
     tenant_access_token = get_valid_tenant_access_token()
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{table_id}/records"
     headers = {
         "Authorization": f"Bearer {tenant_access_token}",
         "Content-Type": "application/json"
@@ -263,107 +290,148 @@ def create_bitable_record(table_id, fields):
     response = requests.post(url, headers=headers, json=payload)
     
     if response.status_code == 200 and response.json().get("code") == 0:
-        logging.info(f"成功创建记录")
+        logging.info("Successfully created record")
         return True
     else:
-        logging.error(f"创建记录失败：{response.text}")
+        logging.error(f"Failed to create record: {response.text}")
         return False
 
+# --- Utility Functions ---
+
 def sanitize_for_json(obj: Any) -> Any:
-    """递归清理 NaN 和无穷值，确保 JSON 兼容"""
+    """
+    Recursively clean NaN and infinity values for JSON compatibility.
+    
+    Args:
+        obj: Object to sanitize
+    
+    Returns:
+        JSON-compatible object
+    """
     if isinstance(obj, dict):
         return {k: sanitize_for_json(v) for k, v in obj.items()}
     elif isinstance(obj, list):
         return [sanitize_for_json(item) for item in obj]
     elif isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
-        logging.warning(f"发现 JSON 不合规的浮点值: {obj}，替换为 None")
-        return None 
+        logging.warning(f"Found JSON non-compliant float value: {obj}, replacing with None")
+        return None
     return obj
 
 def save_records_to_json(records: List[Dict[str, Any]], filename: str) -> None:
-    """保存记录到 JSON 文件"""
+    """
+    Save records to a JSON file.
+    
+    Args:
+        records: List of records to save
+        filename: Output file name
+    """
     try:
-        # 清理记录
         cleaned_records = [sanitize_for_json(record) for record in records]
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(cleaned_records, f, ensure_ascii=False, indent=2)
-        logging.info(f"记录已保存到 {filename}")
+        logging.info(f"Records saved to {filename}")
     except Exception as e:
-        logging.error(f"保存 JSON 文件失败: {str(e)}")
+        logging.error(f"Failed to save JSON file: {str(e)}")
 
 def load_records_from_json(filename: str) -> List[Dict[str, Any]]:
-    """从 JSON 文件加载记录"""
+    """
+    Load records from a JSON file.
+    
+    Args:
+        filename: Input file name
+    
+    Returns:
+        List of records
+    """
     try:
         with open(filename, 'r', encoding='utf-8') as f:
             records = json.load(f)
-        logging.info(f"从 {filename} 加载记录成功，记录数: {len(records)}")
+        logging.info(f"Successfully loaded {len(records)} records from {filename}")
         return records
     except Exception as e:
-        logging.error(f"加载 JSON 文件失败: {str(e)}")
+        logging.error(f"Failed to load JSON file: {str(e)}")
         return []
-    
 
-def normalize_url(raw_link):
-    # 1. 移除可能存在的协议头（http://, https://, //）
+def normalize_url(raw_link: str) -> str:
+    """
+    Normalize URL to standard format (https://www.*).
+    
+    Args:
+        raw_link: Raw URL string
+    
+    Returns:
+        Normalized URL
+    """
     if raw_link.startswith(("http://", "https://", "//")):
-        # 找到 "://" 或 "//" 之后的部分
         raw_link = raw_link.split("://")[-1] if "://" in raw_link else raw_link[2:]
     
-    # 2. 移除开头的 "www."（如果有的话，避免重复）
     if raw_link.startswith("www."):
         raw_link = raw_link[4:]
     
-    # 3. 移除末尾的斜杠 "/"
     raw_link = raw_link.rstrip("/")
-    
-    # 4. 拼接成最终的 "https://www." 格式
-    normalized_url = f"https://www.{raw_link}"
-    
-    return normalized_url
+    return f"https://www.{raw_link}"
 
+# --- Async Functions ---
 
-async def get_valid_tenant_access_token_async():
+async def get_valid_tenant_access_token_async() -> str:
     """
-    获取有效的 tenant_access_token，自动处理过期（异步版本）
+    Get a valid tenant access token asynchronously, refreshing if expired.
+    
+    Returns:
+        Valid tenant access token
     """
     now = time.time()
-
     if _token_cache["token"] is None or now > _token_cache["expire_at"] - 60:
         _token_cache["token"] = await get_tenant_access_token_async()
         _token_cache["expire_at"] = now + 6000
     return _token_cache["token"]
 
-
-async def get_tenant_access_token_async():
-    """获取飞书访问令牌（异步版本）"""
-    token_url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
-    token_payload = {
-        "app_id": APP_ID,
-        "app_secret": APP_SECRET
-    }
+async def get_tenant_access_token_async() -> str:
+    """
+    Fetch a new tenant access token asynchronously.
     
-    headers = {
-        "Content-Type": "application/json"
-    }
+    Returns:
+        Tenant access token or None if failed
+    """
+    token_url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
+    token_payload = {"app_id": APP_ID, "app_secret": APP_SECRET}
+    headers = {"Content-Type": "application/json"}
     
     try:
         async with aiohttp.ClientSession() as session:
             async with session.post(token_url, headers=headers, json=token_payload) as response:
                 token_data = await response.json()
                 tenant_access_token = token_data.get("tenant_access_token")
-                logging.info(f"成功获取访问令牌{tenant_access_token}")
+                logging.info(f"Successfully obtained access token {tenant_access_token}")
                 return tenant_access_token
     except Exception as e:
-        logging.error(f"获取令牌时发生异常: {str(e)}")
+        logging.error(f"Error obtaining token: {str(e)}")
         return None
 
-
-async def get_bitable_datas_async(tenant_access_token, app_token, table_id, view_id, page_token='', page_size=20):
-    """获取飞书多维表格数据（异步版本）"""
+async def get_bitable_datas_async(
+    tenant_access_token: str,
+    app_token: str,
+    table_id: str,
+    view_id: str,
+    page_token: str = '',
+    page_size: int = 20
+) -> Dict[str, Any]:
+    """
+    Fetch data from Feishu bitable asynchronously.
+    
+    Args:
+        tenant_access_token: Valid access token
+        app_token: Application token
+        table_id: Table ID
+        view_id: View ID
+        page_token: Pagination token
+        page_size: Number of records per page
+    
+    Returns:
+        JSON response from Feishu API
+    """
     url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/search?page_size={page_size}&page_token={page_token}&user_id_type=user_id"
-    payload_dict = {}
-    if view_id:
-        payload_dict["view_id"] = view_id
+    payload_dict = {"view_id": view_id} if view_id else {}
     payload = json.dumps(payload_dict)
     headers = {
         'Content-Type': 'application/json',
@@ -374,44 +442,50 @@ async def get_bitable_datas_async(tenant_access_token, app_token, table_id, view
         async with session.post(url, headers=headers, data=payload) as response:
             return await response.json()
 
-
-async def get_records_from_table_async(table_id, view_id, page_size=100):
-    """获取表格记录（异步版本）"""
-    tenant_access_token = await get_valid_tenant_access_token_async()
+async def get_records_from_table_async(table_id: str, view_id: str, page_size: int = 100) -> List[Dict[str, Any]]:
+    """
+    Fetch all records from a Feishu table asynchronously.
     
+    Args:
+        table_id: Table ID
+        view_id: View ID
+        page_size: Number of records per page
+    
+    Returns:
+        List of records
+    """
+    tenant_access_token = await get_valid_tenant_access_token_async()
     page_token = ''
     page_size = 500
     has_more = True
     feishu_datas = []
     
     while has_more:
-        response = await get_bitable_datas_async(tenant_access_token, app_token, table_id, view_id, page_token, page_size)
+        response = await get_bitable_datas_async(tenant_access_token, APP_TOKEN, table_id, view_id, page_token, page_size)
         if response['code'] == 0:
             page_token = response['data'].get('page_token')
             has_more = response['data'].get('has_more')
-
             feishu_datas.extend(response['data'].get('items'))
         else:
-            print(response)
+            logging.error(f"Error fetching records: {response['msg']}")
             raise Exception(response['msg'])
             
     return feishu_datas
 
-
-async def update_bitable_record_async(table_id, record_id, fields):
+async def update_bitable_record_async(table_id: str, record_id: str, fields: Dict[str, Any]) -> bool:
     """
-    更新飞书多维表格中的记录（异步版本）
+    Update a single record in Feishu bitable asynchronously.
     
     Args:
-        table_id (str): 表格ID
-        record_id (str): 记录ID
-        fields (dict): 要更新的字段和值
+        table_id: Table ID
+        record_id: Record ID
+        fields: Fields to update
     
     Returns:
-        bool: 更新是否成功
+        True if update successful, False otherwise
     """
     tenant_access_token = await get_valid_tenant_access_token_async()
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/{record_id}"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{table_id}/records/{record_id}"
     headers = {
         "Authorization": f"Bearer {tenant_access_token}",
         "Content-Type": "application/json"
@@ -424,27 +498,25 @@ async def update_bitable_record_async(table_id, record_id, fields):
             response_json = await response.json()
             
             if response.status == 200 and response_json.get("code") == 0:
-                logging.info(f"成功更新记录 {record_id}")
+                logging.info(f"Successfully updated record {record_id}")
                 return True
             else:
-                response_text = await response.text()
-                logging.error(f"更新记录失败：{response_text}")
+                logging.error(f"Failed to update record: {await response.text()}")
                 return False
 
-
-async def create_bitable_record_async(table_id, fields):
+async def create_bitable_record_async(table_id: str, fields: Dict[str, Any]) -> bool:
     """
-    在飞书多维表格中创建新记录（异步版本）
+    Create a new record in Feishu bitable asynchronously.
     
     Args:
-        table_id (str): 表格ID
-        fields (dict): 要创建的字段和值
+        table_id: Table ID
+        fields: Fields for the new record
     
     Returns:
-        bool: 创建是否成功
+        True if creation successful, False otherwise
     """
     tenant_access_token = await get_valid_tenant_access_token_async()
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{table_id}/records"
     headers = {
         "Authorization": f"Bearer {tenant_access_token}",
         "Content-Type": "application/json"
@@ -457,18 +529,26 @@ async def create_bitable_record_async(table_id, fields):
             response_json = await response.json()
             
             if response.status == 200 and response_json.get("code") == 0:
-                logging.info(f"成功创建记录")
+                logging.info("Successfully created record")
                 return True
             else:
-                response_text = await response.text()
-                logging.error(f"创建记录失败：{response_text}")
+                logging.error(f"Failed to create record: {await response.text()}")
                 return False
 
-
-async def batch_update_records_async(table_id, update_records, batch_size=1000):
-    """批量更新记录（异步版本）"""
+async def batch_update_records_async(table_id: str, update_records: List[Dict[str, Any]], batch_size: int = 1000) -> tuple[int, int]:
+    """
+    Batch update records in Feishu bitable asynchronously.
+    
+    Args:
+        table_id: Table ID
+        update_records: List of records to update
+        batch_size: Number of records per batch
+    
+    Returns:
+        Tuple of (successful updates, failed updates)
+    """
     tenant_access_token = await get_valid_tenant_access_token_async()
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/batch_update"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{APP_TOKEN}/tables/{table_id}/records/batch_update"
     headers = {
         "Authorization": f"Bearer {tenant_access_token}",
         "Content-Type": "application/json"
@@ -477,7 +557,7 @@ async def batch_update_records_async(table_id, update_records, batch_size=1000):
     success, fail = 0, 0
     
     for i in range(0, len(update_records), batch_size):
-        batch = update_records[i : i + batch_size]
+        batch = update_records[i:i + batch_size]
         payload = {"records": batch}
         
         async with aiohttp.ClientSession() as session:
@@ -486,11 +566,10 @@ async def batch_update_records_async(table_id, update_records, batch_size=1000):
                 
                 if response.status == 200 and response_json.get("code") == 0:
                     success += len(batch)
-                    logging.info(f"第 {i//batch_size+1} 批更新成功 {len(batch)} 条")
+                    logging.info(f"Batch {i // batch_size + 1} updated successfully: {len(batch)} records")
                 else:
                     fail += len(batch)
-                    response_text = await response.text()
-                    logging.error(f"第 {i//batch_size+1} 批更新失败：HTTP {response.status}，响应：{response_text}")
+                    logging.error(f"Batch {i // batch_size + 1} update failed: HTTP {response.status}, Response: {await response.text()}")
     
-    logging.info(f"批量更新完成：成功 {success} 条，失败 {fail} 条")
+    logging.info(f"Batch update completed: {success} successful, {fail} failed")
     return success, fail

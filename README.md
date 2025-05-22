@@ -1,0 +1,4 @@
+```
+python -m src.stest
+
+```

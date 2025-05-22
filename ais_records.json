@@ -699,5 +699,369 @@
       ]
     },
     "record_id": "recuLOgKLoX8Ra"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747843200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004163",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "22222",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://444444",
+        "text": "444444"
+      },
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLTtP9U6cEb"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "接口人": [
+        {
+          "avatar_url": "https://s3-imfile.feishucdn.com/static-resource/v1/v3_00j8_54f794ae-d80a-40f0-90f6-3cdab02329dg~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "sunyuefeng@pjlab.org.cn",
+          "en_name": "孙岳枫",
+          "id": "1bfdc3c7",
+          "name": "孙岳枫"
+        }
+      ],
+      "提交日期": 1747843200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004164",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://dghdfh",
+        "text": "dghdfh"
+      },
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLUlszTP3DH"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004101",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "有机化合物谱数据库 SDBS(Spectral Database for Organic Compounds)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://sdbs.db.aist.go.jp",
+        "text": "https://sdbs.db.aist.go.jp"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ],
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLUFV6ppyCI"
+  },
+  {
+    "fields": {
+      "一级领域": "经济与产业",
+      "二级领域": "智能制造",
+      "国家/地区": [
+        "法国"
+      ],
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "外部需求方": [
+        "华东师范大学",
+        "大学"
+      ],
+      "完成输入": true,
+      "提交日期": 1747843200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004101",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "有机化合物谱数据库 SDBS(Spectral Database for Organic Compounds)",
+          "type": "text"
+        }
+      ],
+      "数据类型": "政策文件",
+      "数据链接": {
+        "link": "https://sdbs.db.aist.go.jp",
+        "text": "https://sdbs.db.aist.go.jp"
+      },
+      "来源-合作方": [
+        "1"
+      ],
+      "来源-类型": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLUJjz1Etyh"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004101",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "有机化合物谱数据库 SDBS(Spectral Database for Organic Compounds)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://sdbs.db.aist.go.jp",
+        "text": "https://sdbs.db.aist.go.jp"
+      },
+      "来源-类型": [
+        "合作方提供"
+      ],
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLUJJH5Xie5"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747904178431,
+      "数据ID": [
+        {
+          "text": "xsk_202505004165",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "ABC",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "123",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://123",
+        "text": "123"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ],
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLULNuedq83"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "提交日期": 1747904178431,
+      "数据ID": [
+        {
+          "text": "xsk_202505004165",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "abc",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "123",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://123",
+        "text": "123"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ],
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLULU9BJq46"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "接口人": [
+        {
+          "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/v3_00ma_603baff5-54f9-4436-bb55-e40c2a55da4g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "zenghuilin@pjlab.org.cn",
+          "en_name": "曾慧琳",
+          "id": "2a96a485",
+          "name": "曾慧琳"
+        }
+      ],
+      "提交日期": 1747904178431,
+      "数据ID": [
+        {
+          "text": "xsk_202505004166",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "234",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://234",
+        "text": "234"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ],
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLUNiUIVaqc"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "接口人": [
+        {
+          "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/v3_00i2_0dd322b1-b57d-47c7-9e5b-df0bb8faac0g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "luobei@pjlab.org.cn",
+          "en_name": "骆蓓",
+          "id": "da714327",
+          "name": "骆蓓"
+        }
+      ],
+      "提交日期": 1747904178431,
+      "数据ID": [
+        {
+          "text": "xsk_202505004166",
+          "type": "text"
+        }
+      ],
+      "数据简介": [
+        {
+          "text": "234",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://234",
+        "text": "234"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ]
+    },
+    "record_id": "recuLUNo1sDU1V"
   }
 ]
