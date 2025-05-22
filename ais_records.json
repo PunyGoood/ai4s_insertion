@@ -617,7 +617,7 @@
           "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/v3_00i2_0dd322b1-b57d-47c7-9e5b-df0bb8faac0g~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
           "email": "luobei@pjlab.org.cn",
           "en_name": "骆蓓",
-          "id": "da714327",
+          "id": "ou_06594f55f5089ef3390c2ed3a23a384e",
           "name": "骆蓓"
         }
       ],
@@ -699,5 +699,108 @@
       ]
     },
     "record_id": "recuLOgKLoX8Ra"
+  },
+  {
+    "fields": {
+      "完成输入": true,
+      "提交日期": 1747843200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004163",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "22222",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://444444",
+        "text": "444444"
+      }
+    },
+    "record_id": "recuLTtP9U6cEb"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "接口人": [
+        {
+          "avatar_url": "https://s3-imfile.feishucdn.com/static-resource/v1/v3_00j8_54f794ae-d80a-40f0-90f6-3cdab02329dg~?image_size=72x72&cut_type=default-face&quality=&format=jpeg&sticker_format=.webp",
+          "email": "sunyuefeng@pjlab.org.cn",
+          "en_name": "孙岳枫",
+          "id": "ou_26e9a6fcbcc1b996fb8614bf7beda10f",
+          "name": "孙岳枫"
+        }
+      ],
+      "提交日期": 1747843200000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004164",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "http://dghdfh",
+        "text": "dghdfh"
+      },
+      "进入线索库时间": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ]
+    },
+    "record_id": "recuLUlszTP3DH"
+  },
+  {
+    "fields": {
+      "在线索库的采集状态": [
+        {
+          "text": "未知日期",
+          "type": "text"
+        }
+      ],
+      "备注": [
+        {
+          "text": "暂无",
+          "type": "text"
+        }
+      ],
+      "完成输入": true,
+      "完成输入 (1)": true,
+      "提交日期 (1)": 1747756800000,
+      "数据ID": [
+        {
+          "text": "xsk_202505004101",
+          "type": "text"
+        }
+      ],
+      "数据名称": [
+        {
+          "text": "有机化合物谱数据库 SDBS(Spectral Database for Organic Compounds)",
+          "type": "text"
+        }
+      ],
+      "数据链接": {
+        "link": "https://sdbs.db.aist.go.jp",
+        "text": "https://sdbs.db.aist.go.jp"
+      },
+      "来源-类型": [
+        "内部需求-AI4S"
+      ],
+      "预估数据规模": [
+        "合作方提供"
+      ]
+    },
+    "record_id": "recuLUzkMe4Okz"
   }
 ]

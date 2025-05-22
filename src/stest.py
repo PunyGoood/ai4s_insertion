@@ -180,14 +180,37 @@ if __name__ == "__main__":
                 if existing_external_demanders is not []:
                     new_external_demanders = existing_external_demanders + ais_external_demanders
                 
+                #处理接口人
+                existing_interface_person = xsk_record.get('fields', {}).get('接口人', [])
+                if not isinstance(existing_interface_person, list):
+                    existing_interface_person = []
+
+                ais_interface_person = ais_record.get('fields', {}).get('接口人', [])
+                if not isinstance(ais_interface_person, list):
+                    ais_interface_person = []
+                
+                new_interface_person = existing_interface_person + ais_interface_person
+
+                #处理内部需求方
+                existing_internal_demanders = xsk_record.get('fields', {}).get('内部需求方', [])
+                if not isinstance(existing_internal_demanders, list):
+                    existing_internal_demanders = []
+
+                ais_internal_demanders = ais_record.get('fields', {}).get('内部需求方', [])
+                if not isinstance(ais_internal_demanders, list):
+                    ais_internal_demanders = []
+
+                new_internal_demanders = existing_internal_demanders + ais_internal_demanders
 
                 # 更新XSK记录
                 fields_xsk = {
                     '来源-线索次数': current_count + 1,
                     '来源-类型': new_type,
                     '来源-（内部）需求团队': ['AI4生命科学团队'],
-                    '外部需求方': new_external_demanders
-                }
+                    '外部需求方': new_external_demanders,
+                    '接口人': new_interface_person,
+                    '内部需求方': new_internal_demanders
+                }   
                 update_bitable_record(LARK_TAB_ID_xsk, rid, fields_xsk)
 
                 # 获取ID和日期信息
@@ -269,6 +292,17 @@ if __name__ == "__main__":
                 issue_id = fields.get('来源-事件ID', '')
                 issue_id = [issue_id] if issue_id else []
 
+                #处理接口人
+                interface_person = ais_record.get('fields', {}).get('接口人', [])
+                if not isinstance(interface_person, list):
+                    interface_person = []
+                
+                #处理内部需求方
+                internal_demanders = ais_record.get('fields', {}).get('内部需求方', [])
+                if not isinstance(internal_demanders, list):
+                    internal_demanders = []
+                
+                
                 # 创建新记录
                 new_record = {
                     '数据ID': id,
@@ -307,7 +341,9 @@ if __name__ == "__main__":
                     '来源-（外部）提供单位': fields.get('来源-（外部）提供单位', []),
                     '来源-存储方': fields.get('来源-存储方', []),
                     '来源-线索次数': 1,
-                    '外部需求方': fields.get('外部需求方', [])
+                    '外部需求方': fields.get('外部需求方', []),
+                    '接口人': interface_person,
+                    '内部需求方': internal_demanders
                 }
                 
                 print(new_record)

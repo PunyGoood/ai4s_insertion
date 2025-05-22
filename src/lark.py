@@ -176,7 +176,7 @@ def get_tenant_access_token():
 
 def get_bitable_datas(tenant_access_token, app_token, table_id, view_id, page_token='', page_size=20):
 
-    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/search?page_size={page_size}&page_token={page_token}&user_id_type=user_id"
+    url = f"https://open.feishu.cn/open-apis/bitable/v1/apps/{app_token}/tables/{table_id}/records/search?page_size={page_size}&page_token={page_token}"
     payload_dict = {}
     if view_id:
         payload_dict["view_id"] = view_id
